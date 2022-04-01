@@ -1,0 +1,24 @@
+unit log_tecnico;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs;
+
+type
+  Tfrm_log_interacao_tecnico = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_log_interacao_tecnico: Tfrm_log_interacao_tecnico;
+
+implementation
+
+{$R *.dfm}
+
+end.

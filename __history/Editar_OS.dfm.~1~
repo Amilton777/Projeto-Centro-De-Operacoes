@@ -1,0 +1,489 @@
+object FRM_EDITAR_OS: TFRM_EDITAR_OS
+  Left = 0
+  Top = 0
+  Caption = 'EDITAR ORDEN DE SERVI'#199'O'
+  ClientHeight = 521
+  ClientWidth = 1094
+  Color = clSkyBlue
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  KeyPreview = True
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Label1: TLabel
+    Left = 16
+    Top = 18
+    Width = 80
+    Height = 16
+    Caption = 'ID OPERACAO'
+  end
+  object Label2: TLabel
+    Left = 112
+    Top = 18
+    Width = 66
+    Height = 16
+    Caption = 'CONTRATO'
+  end
+  object Label3: TLabel
+    Left = 232
+    Top = 18
+    Width = 313
+    Height = 16
+    Caption = 'LOGRADOURO COMPLETO (RUA + NUMERO + BAIRRO)'
+  end
+  object Label4: TLabel
+    Left = 669
+    Top = 18
+    Width = 73
+    Height = 16
+    Caption = 'DATA INICIO'
+  end
+  object Label5: TLabel
+    Left = 813
+    Top = 18
+    Width = 113
+    Height = 16
+    Caption = 'DATA FINALIZA'#199#195'O'
+  end
+  object Label6: TLabel
+    Left = 16
+    Top = 114
+    Width = 68
+    Height = 16
+    Caption = 'ID TECNICO'
+  end
+  object Label7: TLabel
+    Left = 112
+    Top = 114
+    Width = 111
+    Height = 16
+    Caption = 'NOME DO TECNICO'
+  end
+  object Label8: TLabel
+    Left = 280
+    Top = 114
+    Width = 62
+    Height = 16
+    Caption = 'ID ORIGEM'
+  end
+  object Label9: TLabel
+    Left = 376
+    Top = 114
+    Width = 112
+    Height = 16
+    Caption = 'ORIGEM DA ORDEM'
+  end
+  object Label10: TLabel
+    Left = 544
+    Top = 114
+    Width = 68
+    Height = 16
+    Caption = 'ID SERVI'#199'O'
+  end
+  object Label11: TLabel
+    Left = 640
+    Top = 114
+    Width = 60
+    Height = 16
+    Caption = 'SERVI'#199'OS'
+  end
+  object Label12: TLabel
+    Left = 830
+    Top = 114
+    Width = 62
+    Height = 16
+    Caption = 'ID PLANOS'
+  end
+  object Label13: TLabel
+    Left = 916
+    Top = 114
+    Width = 89
+    Height = 16
+    Caption = 'TIPO DE PLANO'
+  end
+  object Label14: TLabel
+    Left = 956
+    Top = 18
+    Width = 125
+    Height = 16
+    Caption = 'STATUS DO SERVI'#199'O'
+  end
+  object Bevel1: TBevel
+    Left = 8
+    Top = 8
+    Width = 1079
+    Height = 161
+  end
+  object Bevel2: TBevel
+    Left = 8
+    Top = 378
+    Width = 1079
+    Height = 135
+  end
+  object Label15: TLabel
+    Left = 407
+    Top = 454
+    Width = 121
+    Height = 16
+    Caption = 'PONTUA'#199#195'O TOTAL'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clTeal
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Label16: TLabel
+    Left = 8
+    Top = 389
+    Width = 209
+    Height = 16
+    Caption = 'PONTOS ADICIONAIS DE SERVI'#199'O'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object Bevel3: TBevel
+    Left = 8
+    Top = 389
+    Width = 537
+    Height = 124
+  end
+  object Bevel4: TBevel
+    Left = 592
+    Top = 389
+    Width = 485
+    Height = 124
+  end
+  object DBEdit1: TDBEdit
+    Left = 16
+    Top = 40
+    Width = 80
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'idOperacoes'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    Enabled = False
+    TabOrder = 0
+  end
+  object DBEdit2: TDBEdit
+    Left = 112
+    Top = 40
+    Width = 97
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'CONTRATO'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 1
+  end
+  object DBEdit3: TDBEdit
+    Tag = 1
+    Left = 232
+    Top = 40
+    Width = 417
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'LOGRADOURO'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 2
+  end
+  object DBEdit4: TDBEdit
+    Left = 669
+    Top = 40
+    Width = 121
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'DATA_INICIAL'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    Enabled = False
+    TabOrder = 3
+  end
+  object DBEdit5: TDBEdit
+    Left = 813
+    Top = 40
+    Width = 121
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'DATA_FINALIZACAO'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    Enabled = False
+    TabOrder = 4
+  end
+  object DBEdit6: TDBEdit
+    Tag = 2
+    Left = 16
+    Top = 136
+    Width = 80
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'idTecnicos'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 5
+    OnExit = DBEdit6Exit
+  end
+  object DBEdit7: TDBEdit
+    Left = 280
+    Top = 136
+    Width = 80
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'idOrigem'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 6
+    OnExit = DBEdit7Exit
+  end
+  object DBEdit8: TDBEdit
+    Left = 544
+    Top = 136
+    Width = 80
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'idServicos'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 7
+    OnExit = DBEdit8Exit
+  end
+  object DBEdit9: TDBEdit
+    Left = 830
+    Top = 136
+    Width = 80
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'idPlanos'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 8
+    OnExit = DBEdit9Exit
+  end
+  object DBEdit10: TDBEdit
+    Left = 956
+    Top = 40
+    Width = 121
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    DataField = 'STATUS'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    Enabled = False
+    TabOrder = 9
+  end
+  object DBEdit11: TDBEdit
+    Left = 407
+    Top = 472
+    Width = 122
+    Height = 27
+    Color = clInfoBk
+    DataField = 'TOTAL_PONTOS'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clTeal
+    Font.Height = -16
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 10
+  end
+  object CB_TECNICOS: TComboBox
+    Tag = 1
+    Left = 112
+    Top = 136
+    Width = 153
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    TabOrder = 11
+    OnChange = CB_TECNICOSChange
+    Items.Strings = (
+      '')
+  end
+  object DBMemo1: TDBMemo
+    Left = 8
+    Top = 184
+    Width = 1078
+    Height = 193
+    Color = clInfoBk
+    DataField = 'OBSERVACAO'
+    DataSource = frm_painel_servicos.DS_OPERACOES
+    TabOrder = 12
+  end
+  object CB_ORIGEM: TComboBox
+    Left = 376
+    Top = 136
+    Width = 153
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    TabOrder = 13
+    OnChange = CB_ORIGEMChange
+    Items.Strings = (
+      '')
+  end
+  object CB_SERVICOS: TComboBox
+    Left = 640
+    Top = 136
+    Width = 161
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    TabOrder = 14
+    OnChange = CB_SERVICOSChange
+    Items.Strings = (
+      '')
+  end
+  object CB_TIPO_PLANO: TComboBox
+    Left = 916
+    Top = 136
+    Width = 161
+    Height = 24
+    CharCase = ecUpperCase
+    Color = clInfoBk
+    TabOrder = 15
+    OnChange = CB_TIPO_PLANOChange
+    Items.Strings = (
+      '')
+  end
+  object btn_cancelar: TBitBtn
+    Left = 852
+    Top = 450
+    Width = 209
+    Height = 49
+    Caption = 'CANCELAR [ESC]'
+    TabOrder = 16
+    OnClick = btn_cancelarClick
+  end
+  object btn_salvar: TBitBtn
+    Left = 852
+    Top = 395
+    Width = 209
+    Height = 49
+    Caption = 'SALVAR [ENTER]'
+    TabOrder = 17
+    OnClick = btn_salvarClick
+  end
+  object btn_status: TBitBtn
+    Left = 813
+    Top = 70
+    Width = 264
+    Height = 38
+    Caption = 'TROCA DE STATUS -[F10]'
+    Style = bsNew
+    TabOrder = 18
+    OnClick = btn_statusClick
+  end
+  object DB_GRID_ITENS_ADD: TDBGrid
+    Left = 8
+    Top = 408
+    Width = 385
+    Height = 91
+    Color = clCream
+    DataSource = DS_ITENS_ADD
+    TabOrder = 19
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -13
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Color = clInfoBk
+        Expanded = False
+        FieldName = 'IDADICIONAIS'
+        Title.Caption = 'ID '
+        Width = 32
+        Visible = True
+      end
+      item
+        Color = clInfoBk
+        Expanded = False
+        FieldName = 'DESCRICAO'
+        Title.Caption = 'DESCRIC'#195'O'
+        Width = 280
+        Visible = True
+      end
+      item
+        Color = clInfoBk
+        Expanded = False
+        FieldName = 'PONTUACAO'
+        Title.Caption = 'PONTO'
+        Width = 48
+        Visible = True
+      end>
+  end
+  object btn_adcionais: TButton
+    Left = 407
+    Top = 408
+    Width = 122
+    Height = 40
+    Caption = 'ADCIONAIS [F11] '
+    TabOrder = 20
+    OnClick = btn_adcionaisClick
+  end
+  object QRY_ORIGEM: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'SELECT * FROM ORIGEM')
+    Left = 416
+    Top = 72
+  end
+  object QRY_SERVICOS: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'SELECT DES_SERVICO FROM SERVICOS')
+    Left = 648
+    Top = 72
+  end
+  object QRY_TECNICOS: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'Select idTECNICOS, NOME_TECNICO from tecnicos')
+    Left = 192
+    Top = 72
+  end
+  object QRY_TIPO_PLANO: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      'SELECT DESC_PLANO FROM PLANOS')
+    Left = 776
+    Top = 72
+  end
+  object DS_ITENS_ADD: TDataSource
+    DataSet = QRY_ITENS_ADD
+    Left = 544
+    Top = 448
+  end
+  object QRY_ITENS_ADD: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      
+        'SELECT ID.IDOPERACOES, OP.CONTRATO,ID.IDADICIONAIS,AD.DESCRICAO,' +
+        ' ID.PONTUACAO FROM OPERACOES OP, adicionais AD, itens_adicionais' +
+        ' ID'#10'WHERE ID.IDADICIONAIS = AD.IDADICIONAIS AND ID.IDOPERACOES =' +
+        ' OP.IDOPERACOES ')
+    Left = 544
+    Top = 392
+    ParamData = <
+      item
+        Name = 'ID'
+      end>
+  end
+end

@@ -1,0 +1,46 @@
+program Project1;
+
+uses
+  Vcl.Forms,
+  Unit1 in 'Unit1.pas' {Frm_login},
+  Unit2 in 'Unit2.pas' {DM: TDataModule},
+  Unit4 in 'Unit4.pas' {frm_servicos},
+  Unit6 in 'Unit6.pas' {frm_painel_servicos},
+  Unit7 in 'Unit7.pas' {frm_nova_ordem_servico},
+  Unit3 in 'Unit3.pas' {FRM_EDITAR_OS},
+  Unit5 in 'Unit5.pas' {frm_Troca_Status},
+  Unit8 in 'Unit8.pas' {frm_novo_adicionais},
+  Unit9 in 'Unit9.pas' {frm_import},
+  Unit10 in 'Unit10.pas' {frm_Deslocamentos},
+  Unit11 in 'Unit11.pas' {frm_reagendamento},
+  FrmEscala in 'FrmEscala.pas' {frm_escala},
+  log_tecnico in 'log_tecnico.pas' {frm_log_interacao_tecnico},
+  novo_tecnico in 'novo_tecnico.pas' {frm_novo_tecnico},
+  cadastro_tecnico in 'cadastro_tecnico.pas' {frm_cadastro_tecnico},
+  FrmFotosOS in 'FrmFotosOS.pas' {frm_fotos_os},
+  FrmExibirUnit12 in 'FrmExibirUnit12.pas' {frm_exibir};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TDM, DM);
+  Application.CreateForm(TFrm_login, Frm_login);
+  Application.CreateForm(Tfrm_servicos, frm_servicos);
+  Application.CreateForm(Tfrm_painel_servicos, frm_painel_servicos);
+  Application.CreateForm(Tfrm_nova_ordem_servico, frm_nova_ordem_servico);
+  Application.CreateForm(TFRM_EDITAR_OS, FRM_EDITAR_OS);
+  Application.CreateForm(Tfrm_Troca_Status, frm_Troca_Status);
+  Application.CreateForm(Tfrm_novo_adicionais, frm_novo_adicionais);
+  Application.CreateForm(Tfrm_import, frm_import);
+  Application.CreateForm(Tfrm_Deslocamentos, frm_Deslocamentos);
+  Application.CreateForm(Tfrm_reagendamento, frm_reagendamento);
+  Application.CreateForm(Tfrm_escala, frm_escala);
+  Application.CreateForm(Tfrm_log_interacao_tecnico, frm_log_interacao_tecnico);
+  Application.CreateForm(Tfrm_novo_tecnico, frm_novo_tecnico);
+  Application.CreateForm(Tfrm_cadastro_tecnico, frm_cadastro_tecnico);
+  Application.CreateForm(Tfrm_fotos_os, frm_fotos_os);
+  Application.CreateForm(Tfrm_exibir, frm_exibir);
+  Application.Run;
+end.

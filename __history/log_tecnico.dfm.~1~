@@ -1,0 +1,17 @@
+object frm_log_interacao_tecnico: Tfrm_log_interacao_tecnico
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'LOG DE INTERA'#199#195'O DO T'#201'CNICO'
+  ClientHeight = 442
+  ClientWidth = 499
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+end

@@ -1,0 +1,98 @@
+unit Unit8;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  Tfrm_novo_adicionais = class(TForm)
+    Bevel1: TBevel;
+    DB_GRID_ADICIONAIS: TDBGrid;
+    QRY_ADICIONAIS_LISTAR: TFDQuery;
+    DS_ADCIONAIS: TDataSource;
+    QRY_INSERIR_ADICIONAIS: TFDQuery;
+    procedure FormShow(Sender: TObject);
+    procedure DB_GRID_ADICIONAISDblClick(Sender: TObject);
+  private
+    { Private declarations }
+
+
+  public
+    { Public declarations }
+    function TrocaVirgulaPorPonto(Valor: string): String;
+
+  end;
+
+var
+  frm_novo_adicionais: Tfrm_novo_adicionais;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit3, Unit5;
+
+procedure Tfrm_novo_adicionais.DB_GRID_ADICIONAISDblClick(Sender: TObject);
+var Ponto: STRING;
+chave: integer;
+begin
+      Ponto:= TrocaVirgulaPorPonto((DB_GRID_ADICIONAIS.Fields[2].TEXT));
+
+      QRY_INSERIR_ADICIONAIS.Close;
+      QRY_INSERIR_ADICIONAIS.SQL.Clear;
+      QRY_INSERIR_ADICIONAIS.SQL.Add('SELECT MAX(IDitens_adicionais) FROM agendamento.itens_adicionais');
+      QRY_INSERIR_ADICIONAIS.Open;
+
+      CHAVE:=QRY_INSERIR_ADICIONAIS.FieldByName('MAX(IDITENS_ADICIONAIS)').AsInteger;
+      INC(CHAVE);
+
+
+      QRY_INSERIR_ADICIONAIS.Close;
+      QRY_INSERIR_ADICIONAIS.SQL.Clear;
+      QRY_INSERIR_ADICIONAIS.SQL.Add('INSERT INTO ITENS_ADICIONAIS(iditens_adicionais, idadicionais, idoperacoes, pontuacao)');
+      QRY_INSERIR_ADICIONAIS.SQL.Add('values('+IntToStr(CHAVE)+','+DB_GRID_ADICIONAIS.Fields[0].TEXT+','+FRM_EDITAR_OS.DBEdit1.TEXT+','+Ponto+')');
+
+      QRY_INSERIR_ADICIONAIS.ExecSQL;
+
+
+      frm_Troca_Status.QRY_ITENS_ADD.Close;
+      frm_Troca_Status.QRY_ITENS_ADD.SQL.Clear;
+      frm_Troca_Status.QRY_ITENS_ADD.SQL.Add('SELECT ID.IDOPERACOES, ID.IDADICIONAIS,AD.DESCRICAO, ID.PONTUACAO');
+      frm_Troca_Status.QRY_ITENS_ADD.SQL.Add('FROM ITENS_ADICIONAIS ID, ADICIONAIS AD');
+      frm_Troca_Status.QRY_ITENS_ADD.SQL.Add('WHERE (ID.IDADICIONAIS = AD.IDADICIONAIS) AND (ID.IDOPERACOES = :pID)');
+
+      frm_Troca_Status.QRY_ITENS_ADD.ParamByName('pID').Value:= frm_Troca_Status.DBEdit1.Text;
+      frm_Troca_Status.QRY_ITENS_ADD.Open;
+
+
+
+      //CB_TECNICOS.items.add(QRY_TECNICOS.fieldbyname('NOME_TECNICO').AsString);
+      //NOME_TECNICOS[CONTADOR]:= (QRY_TECNICOS.fieldbyname('NOME_TECNICO').AsString);
+end;
+
+procedure Tfrm_novo_adicionais.FormShow(Sender: TObject);
+begin
+
+  QRY_ADICIONAIS_LISTAR.Close;
+  QRY_ADICIONAIS_LISTAR.Open;
+
+end;
+
+function Tfrm_novo_adicionais.TrocaVirgulaPorPonto(Valor: string): String;
+var i:integer;
+begin
+    if Valor <>'' then begin
+        for i := 0 to Length(Valor) do begin
+            if Valor[i]=',' then Valor[i]:='.';
+
+        end;
+     end;
+     Result := valor;
+end;
+
+end.

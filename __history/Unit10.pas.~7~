@@ -1,0 +1,102 @@
+unit Unit10;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, FireDAC.Stan.Intf,
+  FireDAC.Stan.Option, FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS,
+  FireDAC.Phys.Intf, FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.Grids, Vcl.DBGrids,
+  Vcl.StdCtrls;
+
+type
+  Tfrm_Deslocamentos = class(TForm)
+    Edt_pesquisa: TEdit;
+    DBGrid1: TDBGrid;
+    Qry_Deslocamentos: TFDQuery;
+    DS_Deslocamentos: TDataSource;
+    Edt_idtecnico: TEdit;
+    Edt_nome_tecnico: TEdit;
+    edt_cidade_origem: TEdit;
+    Edt_data: TEdit;
+    Qry_INSERIR_DESLOCAMENTO: TFDQuery;
+    DBGrid2: TDBGrid;
+    DS_INSERIR_DESLOCAMENTO: TDataSource;
+    procedure FormShow(Sender: TObject);
+    procedure Edt_pesquisaChange(Sender: TObject);
+    procedure DBGrid1DrawDataCell(Sender: TObject; const Rect: TRect;
+      Field: TField; State: TGridDrawState);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_Deslocamentos: Tfrm_Deslocamentos;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit6;
+
+procedure Tfrm_Deslocamentos.DBGrid1DrawDataCell(Sender: TObject;
+  const Rect: TRect; Field: TField; State: TGridDrawState);
+begin
+    IF Qry_Deslocamentos.RowsAffected > 0  then
+     IF (DB_GRID_SERVICOS.Columns[0].Field.Text = 0 THEN
+     BEGIN
+        DB_GRID_SERVICOS.Canvas.Brush.Color:= CLInfobk;
+        DB_GRID_SERVICOS.Canvas.FillRect(Rect);
+        DB_GRID_SERVICOS.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+     END
+
+     ELSE
+      BEGIN
+
+      END;
+
+
+
+
+
+end;
+
+procedure Tfrm_Deslocamentos.Edt_pesquisaChange(Sender: TObject);
+begin
+      Qry_Deslocamentos.Close;
+      Qry_Deslocamentos.SQL.Clear;
+      Qry_Deslocamentos.SQL.Add('Select * from Deslocamentos');
+      Qry_Deslocamentos.SQL.Add('Where Descricao_Deslocamento like :pDados');
+
+      Qry_Deslocamentos.Params.ParamByName('pDados').AsString:='%'+Edt_pesquisa.Text+'%';
+      Qry_Deslocamentos.Open;
+
+end;
+
+procedure Tfrm_Deslocamentos.FormShow(Sender: TObject);
+begin
+
+    Edt_pesquisa.SetFocus;
+
+    Edt_idtecnico.Text:= frm_painel_servicos.DB_GRID_SERVICOS.Fields[1].Text;
+    Edt_nome_tecnico.Text:= frm_painel_servicos.DB_GRID_SERVICOS.Fields[2].Text;
+    edt_cidade_origem.Text:= frm_painel_servicos.DB_GRID_SERVICOS.Fields[0].Text;
+    Edt_data.Text:= frm_painel_servicos.DB_GRID_SERVICOS.Fields[3].Text;
+
+
+    Qry_INSERIR_DESLOCAMENTO.Close;
+    Qry_INSERIR_DESLOCAMENTO.SQL.Clear;
+    Qry_INSERIR_DESLOCAMENTO.SQL.Add('Select DES.IDDESLOCAMENTOS,DES.DESCRICAO_DESLOCAMENTO, TEC.NOME_TECNICO, ID.PONTUACAO, ID.DATA_DESLOCAMENTO from itens_deslocamentos ID, deslocamentos des, tecnicos tec');
+    Qry_INSERIR_DESLOCAMENTO.SQL.Add('Where ID.IDTECNICOS = TEC.IDTECNICOS AND ID.IDTECNICOS = :pID and ID.DATA_DESLOCAMENTO = :pData and ID.IDDESLOCAMENTOS = DES.IDDESLOCAMENTOS');
+
+    Qry_INSERIR_DESLOCAMENTO.ParamByName('pID').Value:= Edt_idtecnico.Text;
+    Qry_INSERIR_DESLOCAMENTO.ParamByName('pData').Value:= FormatDateTime('yyyy-mm-dd',StrToDate(Edt_data.Text));
+    Qry_INSERIR_DESLOCAMENTO.Open;
+
+
+end;
+
+end.

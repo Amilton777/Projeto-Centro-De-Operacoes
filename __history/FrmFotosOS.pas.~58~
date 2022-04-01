@@ -1,0 +1,340 @@
+unit FrmFotosOS;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms,Jpeg, Vcl.Dialogs, Vcl.ExtCtrls, IdBaseComponent,
+  IdComponent, IdTCPConnection, IdTCPClient, IdHTTP,
+  IdExplicitTLSClientServerBase, IdFTP, FireDAC.Stan.Intf, FireDAC.Stan.Option,
+  FireDAC.Stan.Param, FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf,
+  FireDAC.DApt.Intf, FireDAC.Stan.Async, FireDAC.DApt, Data.DB,
+  FireDAC.Comp.DataSet, FireDAC.Comp.Client, Vcl.StdCtrls, Vcl.Buttons;
+
+type
+  Tfrm_fotos_os = class(TForm)
+    Image1: TImage;
+    IdFTP1: TIdFTP;
+    Image2: TImage;
+    Image3: TImage;
+    Image4: TImage;
+    Image5: TImage;
+    Image6: TImage;
+    Image7: TImage;
+    Image8: TImage;
+    Image9: TImage;
+    Image10: TImage;
+    Image11: TImage;
+    Image12: TImage;
+    Image13: TImage;
+    Image14: TImage;
+    Image15: TImage;
+    Image16: TImage;
+    Image17: TImage;
+    Image18: TImage;
+    Qry_fotos: TFDQuery;
+    Btn_concatenar_fotos: TBitBtn;
+    BitBtn1: TBitBtn;
+    procedure FormShow(Sender: TObject);
+    procedure Image1DblClick(Sender: TObject);
+    procedure Image2DblClick(Sender: TObject);
+    procedure Image3DblClick(Sender: TObject);
+    procedure Image4DblClick(Sender: TObject);
+    procedure Image5DblClick(Sender: TObject);
+    procedure Image6DblClick(Sender: TObject);
+    procedure Image7DblClick(Sender: TObject);
+    procedure Image8DblClick(Sender: TObject);
+    procedure Image9DblClick(Sender: TObject);
+    procedure Image10DblClick(Sender: TObject);
+    procedure Image11DblClick(Sender: TObject);
+    procedure Image12DblClick(Sender: TObject);
+    procedure Image13DblClick(Sender: TObject);
+    procedure Image14DblClick(Sender: TObject);
+    procedure Image15DblClick(Sender: TObject);
+    procedure Image16DblClick(Sender: TObject);
+    procedure Image17DblClick(Sender: TObject);
+    procedure Image18DblClick(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure Btn_concatenar_fotosClick(Sender: TObject);
+    procedure BitBtn1Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  function UnirTudo(Imagens : array of TBitmap): TBitmap;
+  function Unir(G1, G2: TGraphic): TBitmap;
+
+  END;
+
+var
+  frm_fotos_os: Tfrm_fotos_os;
+  VetorImagens: array [0..18] of TImage;
+  VetorImagens2: array [0..18] of TBitmap;
+  Caminhos: array [0..18] of string;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit3, FrmExibirUnit12, Unit2;
+
+function Tfrm_fotos_os.Unir(G1, G2: TGraphic): TBitmap;
+begin
+  Result := TBitmap.Create;
+  with Result do
+  try
+    Width := G1.Width + G2.Width;
+    Height := G1.Width;
+    Canvas.Draw(0, 0, G1);
+    Canvas.Draw(G1.Width, 0, G2);
+  except
+    FreeAndNil(Result);
+    raise;
+  end;
+end;
+
+
+function Tfrm_fotos_os.UnirTudo(Imagens : array of TBitmap): TBitmap;
+var
+i : Integer;
+begin
+  Result := TBitmap.Create;
+  with Result do
+  try
+    Width := Imagens[i].Width;
+    Height := Imagens[i].Width;
+    for i := 0 to Length(Imagens) - 1 do begin
+      Canvas.Draw(0, 0, Imagens[i]);
+    end;
+  except
+    FreeAndNil(Result);
+    raise;
+  end;
+end;
+
+procedure Tfrm_fotos_os.BitBtn1Click(Sender: TObject);
+ var
+  P1, P2: TPicture;
+  B: TBitmap;
+begin
+  P1 := TPicture.Create;
+  P2 := TPicture.Create;
+  try
+    //Unir fotos
+    P1.LoadFromFile(caminhos[0]);
+    P2.LoadFromFile(caminhos[1]);
+    B := Unir(P1.Graphic, P2.Graphic);
+    with TJPEGImage.Create do
+    try
+      Assign(B);
+      SaveToFile('C:\Thunder\fotos_os\'+FRM_EDITAR_OS.DBEdit1.Text+'\'+FRM_EDITAR_OS.DBEdit1.Text+'.jpg');
+    finally
+      Free;
+      B.Free;
+    end;
+  finally
+    P1.Free;
+    P2.Free;
+  end;
+end;
+
+procedure Tfrm_fotos_os.Btn_concatenar_fotosClick(Sender: TObject);
+VAR RESULTADO: TBitmap;
+
+begin
+   RESULTADO:= (UnirTudo(VetorImagens2));
+ //Assign(RESULTADO);
+   RESULTADO.SaveToFile('C:\Thunder\fotos_os\'+FRM_EDITAR_OS.DBEdit1.Text+'\'+FRM_EDITAR_OS.DBEdit1.Text+'.jpg');
+
+end;
+
+procedure Tfrm_fotos_os.FormClose(Sender: TObject; var Action: TCloseAction);
+VAR I: INTEGER;
+begin
+     For I := 1 to 18 do
+      begin
+        VetorImagens[I].Picture.LoadFromFile('');
+      end;
+      Qry_fotos.Close;
+
+end;
+
+procedure Tfrm_fotos_os.FormShow(Sender: TObject);
+
+var
+  path:string;
+
+  lab, i: integer;
+
+
+
+  begin
+      Lab:=0;
+     For I := 0 to 18 do
+      begin
+        if (Components [I] is TImage) then
+          begin
+           Inc (Lab);
+           VetorImagens[Lab] := TImage (Components [I]);
+           VetorImagens2[Lab] := TBitmap (Components [I]);
+          end;
+      end;
+
+      if not DirectoryExists('C:\Thunder\fotos_os\'+FRM_EDITAR_OS.DBEdit1.Text) then
+        ForceDirectories('C:\Thunder\fotos_os\'+FRM_EDITAR_OS.DBEdit1.Text);
+
+
+      IdFTP1.Connect;
+
+      Qry_fotos.Close;
+      Qry_fotos.SQL.Text:=('select arquivo from imagens where idoperacoes = :id');
+      Qry_fotos.Params.ParamByName('id').AsString:= FRM_EDITAR_OS.DBEdit1.Text;
+      Qry_fotos.Open;
+
+      Lab:=1;
+
+      while not Qry_fotos.Eof do
+      begin
+       path :=  ('C:\Thunder\fotos_os\'+FRM_EDITAR_OS.DBEdit1.Text+'\'+Qry_fotos.FieldByName('arquivo').AsString);
+       if not fileExists (path) then
+        IdFTP1.Get('imagens/'+Qry_fotos.FieldByName('arquivo').AsString, path, True, True);
+         VetorImagens[lab].Picture.LoadFromFile(path);
+         Caminhos[LAB]:= (path);
+         inc(lab);
+       Qry_fotos.Next;
+      end;
+
+
+       IdFTP1.Disconnect;
+
+
+
+end;
+
+procedure Tfrm_fotos_os.Image10DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[10]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image11DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[11]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image12DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[12]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image13DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[13]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image14DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[14]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image15DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[15]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image16DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[16]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image17DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[17]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image18DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[18]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image1DblClick(Sender: TObject);
+begin
+    frm_exibir.Image1.Picture.LoadFromFile(Caminhos[1]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image2DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[2]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image3DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[3]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image4DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[4]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image5DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[5]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image6DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[6]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image7DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[7]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image8DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[8]);
+
+    frm_exibir.showmodal;
+end;
+
+procedure Tfrm_fotos_os.Image9DblClick(Sender: TObject);
+begin
+     frm_exibir.Image1.Picture.LoadFromFile(Caminhos[9]);
+
+    frm_exibir.showmodal;
+end;
+
+end.

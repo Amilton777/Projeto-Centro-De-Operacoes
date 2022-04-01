@@ -1,0 +1,119 @@
+unit Unit9;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.Grids, Vcl.StdCtrls, Vcl.Buttons, ComObj;
+
+type
+  Tfrm_import = class(TForm)
+    OpenDialog1: TOpenDialog;
+    Edit1: TEdit;
+    StringGrid1: TStringGrid;
+    btn_importar: TBitBtn;
+    procedure btn_importarClick(Sender: TObject);
+  private
+    { Private declarations }
+
+function XlsToStringGrid(XStringGrid: TStringGrid; xFileXLS: string): Boolean;
+
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_import: Tfrm_import;
+
+implementation
+
+{$R *.dfm}
+
+Function Tfrm_import.XlsToStringGrid(xStringGrid: TStringGrid; xFileXLS: string): Boolean;
+const
+   xlCellTypeLastCell = $0000000B;
+var
+   XLSAplicacao, AbaXLS: OLEVariant;
+   RangeMatrix: Variant;
+   x, y, k, r,I, LINHA, COLUNA: Integer;
+   REGISTRO : ARRAY [1..9] OF STRING;
+begin
+   Result := False;
+   // Cria Excel- OLE Object
+   XLSAplicacao := CreateOleObject('Excel.Application');
+   try
+   // Esconde Excel
+      XLSAplicacao.Visible := False;
+
+      // Abre o Workbook
+      XLSAplicacao.Workbooks.Open(xFileXLS);
+
+      {Selecione aqui a aba que você deseja abrir primeiro - 1,2,3,4....}
+      XLSAplicacao.WorkSheets[1].Activate;
+
+      {Selecione aqui a aba que você deseja ativar - começando sempre no 1 (1,2,3,4) }
+      AbaXLS := XLSAplicacao.Workbooks[ExtractFileName(xFileXLS)].WorkSheets[1];
+
+      AbaXLS.Cells.SpecialCells(xlCellTypeLastCell, EmptyParam).Activate;
+      // Pegar o número da última linha
+      x := XLSAplicacao.ActiveCell.Row;
+      // Pegar o número da última coluna
+      y := XLSAplicacao.ActiveCell.Column;
+      // Seta xStringGrid linha e coluna
+      XStringGrid.RowCount := x;
+      XStringGrid.ColCount := y;
+      // Associaca a variant WorkSheet com a variant do Delphi
+      RangeMatrix := XLSAplicacao.Range['A1', XLSAplicacao.Cells.Item[x, y]].Value;
+      // Cria o loop para listar os registros no TStringGrid
+      k := 1;
+      repeat
+         for r := 1 to y do
+            XStringGrid.Cells[(r - 1), (k - 1)] := RangeMatrix[k, r];
+         Inc(k, 1);
+      until k > x;
+      RangeMatrix := Unassigned;
+      finally
+            // Fecha o Microsoft Excel
+            if not VarIsEmpty(XLSAplicacao) then
+            begin
+                  XLSAplicacao.Quit;
+                  XLSAplicacao := Unassigned;
+                  AbaXLS := Unassigned;
+                  Result := True;
+            end;
+     R:=1;
+     K:=1;
+     I:=1;
+     LINHA:=0;
+     COLUNA:=0;
+
+    for I := 1 to 67247 do
+     BEGIN
+      IF COLUNA > 0 then
+       BEGIN
+          Insert Into
+       END;
+
+       COLUNA:=0;
+       INC(LINHA);
+     For R := 1 to 9 do
+       BEGIN
+        Inc(COLUNA);
+        REGISTRO[R]:= StringGrid1.Cells[(COLUNA-1),(LINHA-1)])
+
+       END;
+     END;
+
+    End;
+
+
+end;
+
+
+procedure Tfrm_import.btn_importarClick(Sender: TObject);
+begin
+    if OpenDialog1.Execute then
+            XlsToStringGrid(StringGrid1,OpenDialog1.FileName);
+end;
+
+end.

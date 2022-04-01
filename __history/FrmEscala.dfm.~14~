@@ -1,0 +1,169 @@
+object frm_escala: Tfrm_escala
+  Left = 0
+  Top = 0
+  BorderIcons = [biSystemMenu]
+  Caption = 'ESCALA DE TRABALHO'
+  ClientHeight = 481
+  ClientWidth = 462
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnShow = FormShow
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label3: TLabel
+    Left = 239
+    Top = 16
+    Width = 95
+    Height = 17
+    Caption = 'NOME DO T'#201'CNICO'
+  end
+  object Label1: TLabel
+    Left = 239
+    Top = 76
+    Width = 101
+    Height = 13
+    Caption = 'DATA DO TRABALHO'
+  end
+  object Label2: TLabel
+    Left = 239
+    Top = 127
+    Width = 136
+    Height = 20
+    Caption = 'DATA DO TRABALHO'
+  end
+  object Panel1: TPanel
+    Left = -2
+    Top = -9
+    Width = 456
+    Height = 202
+    TabOrder = 2
+    object Edt_data: TEdit
+      Left = 241
+      Top = 104
+      Width = 206
+      Height = 24
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 0
+    end
+    object Edt_dia_semana: TEdit
+      Left = 241
+      Top = 156
+      Width = 206
+      Height = 22
+      Color = clInfoBk
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -12
+      Font.Name = 'Tahoma'
+      Font.Style = []
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object MC_CALENDARIO: TMonthCalendar
+    Left = 8
+    Top = 16
+    Width = 225
+    Height = 160
+    Date = 44501.000000000000000000
+    TabOrder = 0
+    OnDblClick = MC_CALENDARIODblClick
+  end
+  object CB_TECNICOS: TComboBox
+    Left = 239
+    Top = 34
+    Width = 206
+    Height = 24
+    Color = clInfoBk
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlue
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    Items.Strings = (
+      '')
+  end
+  object DBGrid1: TDBGrid
+    Left = 8
+    Top = 199
+    Width = 446
+    Height = 274
+    DataSource = DS_ESCALA
+    TabOrder = 3
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+    TitleFont.Style = []
+    Columns = <
+      item
+        Expanded = False
+        FieldName = 'idescalas'
+        Title.Caption = 'ID'
+        Width = 42
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'data_trabalho'
+        Title.Caption = 'DATA TRABALHO'
+        Width = 89
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'dia_semana'
+        Title.Caption = 'DIA DA SEMANA'
+        Width = 106
+        Visible = True
+      end
+      item
+        Expanded = False
+        FieldName = 'nome_tecnico'
+        Title.Caption = 'NOME DO T'#201'CNICO'
+        Width = 179
+        Visible = True
+      end>
+  end
+  object QRY_TECNICOS: TFDQuery
+    Connection = DM.FDConnection1
+    Left = 104
+    Top = 48
+  end
+  object QRY_ESCALA: TFDQuery
+    Connection = DM.FDConnection1
+    SQL.Strings = (
+      
+        'select idescalas, data_trabalho, dia_semana, nome_tecnico from E' +
+        'SCALAS ES, tecnicos tec where data_trabalho >= :data'
+      'order by data_trabalho')
+    Left = 182
+    Top = 335
+    ParamData = <
+      item
+        Name = 'DATA'
+        DataType = ftDate
+        ParamType = ptInput
+        Value = 44580d
+      end>
+  end
+  object DS_ESCALA: TDataSource
+    DataSet = QRY_ESCALA
+    Left = 46
+    Top = 335
+  end
+end

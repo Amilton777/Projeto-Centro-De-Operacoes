@@ -1,0 +1,82 @@
+unit Unit8;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Data.DB, Vcl.Grids, Vcl.DBGrids,
+  Vcl.ExtCtrls, FireDAC.Stan.Intf, FireDAC.Stan.Option, FireDAC.Stan.Param,
+  FireDAC.Stan.Error, FireDAC.DatS, FireDAC.Phys.Intf, FireDAC.DApt.Intf,
+  FireDAC.Stan.Async, FireDAC.DApt, FireDAC.Comp.DataSet, FireDAC.Comp.Client;
+
+type
+  Tfrm_novo_adicionais = class(TForm)
+    Bevel1: TBevel;
+    DB_GRID_ADICIONAIS: TDBGrid;
+    QRY_ADICIONAIS_LISTAR: TFDQuery;
+    DS_ADCIONAIS: TDataSource;
+    QRY_INSERIR_ADICIONAIS: TFDQuery;
+    procedure FormShow(Sender: TObject);
+    procedure DB_GRID_ADICIONAISDblClick(Sender: TObject);
+  private
+    { Private declarations }
+
+
+  public
+    { Public declarations }
+    function TrocaVirgulaPorPonto(Valor: string): String;
+
+  end;
+
+var
+  frm_novo_adicionais: Tfrm_novo_adicionais;
+
+implementation
+
+{$R *.dfm}
+
+uses Unit2, Unit3;
+
+procedure Tfrm_novo_adicionais.DB_GRID_ADICIONAISDblClick(Sender: TObject);
+var Ponto: STRING;
+begin
+      Ponto:= TrocaVirgulaPorPonto((DB_GRID_ADICIONAIS.Fields[2].TEXT));
+
+      QRY_INSERIR_ADICIONAIS.Close;
+      QRY_INSERIR_ADICIONAIS.SQL.Clear;
+      QRY_INSERIR_ADICIONAIS.SQL.Add('INSERT INTO ITENS_ADICIONAIS(iditens_adicionais, idadicionais, idoperacoes, pontuacao)');
+      QRY_INSERIR_ADICIONAIS.SQL.Add('values('+InttoStr(-1)+','+DB_GRID_ADICIONAIS.Fields[0].TEXT+','+FRM_EDITAR_OS.DBEdit1.TEXT+','+Ponto+')');
+
+   (* QRY_INSERIR_ADICIONAIS.ParamByName('IDAD').Value:=
+      QRY_INSERIR_ADICIONAIS.ParamByName('IDOP').Value:= ;
+      QRY_INSERIR_ADICIONAIS.ParamByName('PONTO').Value:= ; *)
+      ShowMessage(QRY_INSERIR_ADICIONAIS.SQL.Strings[0]);
+      ShowMessage(QRY_INSERIR_ADICIONAIS.SQL.Strings[1]);
+      QRY_INSERIR_ADICIONAIS.ExecSQL;
+
+
+      //CB_TECNICOS.items.add(QRY_TECNICOS.fieldbyname('NOME_TECNICO').AsString);
+      //NOME_TECNICOS[CONTADOR]:= (QRY_TECNICOS.fieldbyname('NOME_TECNICO').AsString);
+end;
+
+procedure Tfrm_novo_adicionais.FormShow(Sender: TObject);
+begin
+
+  QRY_ADICIONAIS_LISTAR.Close;
+  QRY_ADICIONAIS_LISTAR.Open;
+
+end;
+
+function Tfrm_novo_adicionais.TrocaVirgulaPorPonto(Valor: string): String;
+var i:integer;
+begin
+    if Valor <>'' then begin
+        for i := 0 to Length(Valor) do begin
+            if Valor[i]=',' then Valor[i]:='.';
+
+        end;
+     end;
+     Result := valor;
+end;
+
+end.

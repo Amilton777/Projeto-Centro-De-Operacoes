@@ -1,0 +1,38 @@
+object frm_import: Tfrm_import
+  Left = 0
+  Top = 0
+  Caption = 'frm_import'
+  ClientHeight = 531
+  ClientWidth = 812
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object BitBtn1: TBitBtn
+    Left = 488
+    Top = 40
+    Width = 75
+    Height = 25
+    Caption = 'BitBtn1'
+    TabOrder = 0
+  end
+  object XStringGrid: TStringGrid
+    Left = 92
+    Top = 120
+    Width = 320
+    Height = 120
+    TabOrder = 1
+  end
+  object OpenDialog1: TOpenDialog
+    FileName = 
+      'C:\Users\Projeto 05\Desktop\AGENDAMENTO_DELPHI\IMPORT\IMPORTACAO' +
+      '.xlsx'
+    Left = 640
+    Top = 96
+  end
+end

@@ -1,0 +1,42 @@
+object frm_servicos: Tfrm_servicos
+  Left = 0
+  Top = 0
+  Caption = 'CADASTRO DE SERVI'#199'OS'
+  ClientHeight = 431
+  ClientWidth = 817
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  PixelsPerInch = 96
+  TextHeight = 13
+  object DBEdit1: TDBEdit
+    Left = 360
+    Top = 224
+    Width = 121
+    Height = 21
+    TabOrder = 0
+  end
+  object DBEdit2: TDBEdit
+    Left = 368
+    Top = 232
+    Width = 121
+    Height = 21
+    TabOrder = 1
+  end
+  object DBEdit3: TDBEdit
+    Left = 376
+    Top = 240
+    Width = 121
+    Height = 21
+    TabOrder = 2
+  end
+  object DS_SERVICOS: TDataSource
+    DataSet = DM.QRY_SERVICOS
+    Left = 672
+    Top = 200
+  end
+end
